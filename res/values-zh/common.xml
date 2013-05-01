@@ -24,4 +24,10 @@
     <string name="share">分享</string>
     <string name="sharetext">专为开发者设计的主屏，</string>
 	<string name="more">更多...</string>
+	<string name="hideapp">隐藏</string>
+	<string name="hidepage">隐藏当前页</string>
+	<string name="appdetail">详细信息...</string>
+	<string name="addtoFavo">添加到主屏</string>
+	<string name="addtoShort">添加快捷方式</string>
+	<string name="backapp">备份</string>
 </resources>
