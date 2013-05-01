@@ -500,7 +500,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 							
 							if (backupOdex) {
 								hintDialog.setMessage(getString(R.string.backapp) +	" " + 
-										label + " " + getString(R.string.to) + " " + 
+										label + " to " + 
 										downloadPath + "apk/" + apk);
 								hintDialog.show();
 							}
@@ -770,7 +770,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				setTitle(R.string.app_name).
 				setIcon(R.drawable.icon).
 				setMessage(R.string.restart).
-				setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+				setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//save the layout
@@ -799,7 +799,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				}).create();
 		
 		hintDialog = new AlertDialog.Builder(this).
-				setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+				setNegativeButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 					}
@@ -878,7 +878,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 
 	        Intent intentSend = new Intent(Intent.ACTION_SEND);
 	        intentSend.setType("image/*");  
-	        intentSend.putExtra(Intent.EXTRA_SUBJECT, R.string.share); 
+	        intentSend.putExtra(Intent.EXTRA_SUBJECT, R.string.share);
 	        intentSend.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(downloadPath + "snap/snap.png")));
 	        util.startActivity(Intent.createChooser(intentSend, getString(R.string.sharemode)), true, getBaseContext());
         }
@@ -966,8 +966,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		else if (current == userAlphaList.index) 
 			radioText.setText(getString(R.string.userapps) + "(" + userAlphaList.getCount() + ")");
 		else if ((paid) && (current == packageAlphaList.index)) 
-			radioText.setText(getString(R.string.packages) + "(" + packageAlphaList.getCount() + ")");
-		else radioText.setText(R.string.home);
+			radioText.setText("service/provider (" + packageAlphaList.getCount() + ")");
+		else radioText.setText("Home");
     }
     
 	BroadcastReceiver packageReceiver = new BroadcastReceiver() {

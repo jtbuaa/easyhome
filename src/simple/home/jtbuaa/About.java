@@ -173,7 +173,7 @@ public class About extends Activity{
         
         Button btnShareHome = (Button) findViewById(R.id.title);
         btnShareHome.setText(getString(R.string.app_name) + " " + getIntent().getStringExtra("version"));
-        btnShareHome.setOnClickListener(new OnClickListener() {
+        /*btnShareHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
     	        String text = getString(R.string.app_name) + ", " 
@@ -186,7 +186,7 @@ public class About extends Activity{
         		intent.putExtra(Intent.EXTRA_TEXT, text);
        			util.startActivity(Intent.createChooser(intent, getString(R.string.sharemode)), true, getBaseContext());
 			}
-        });
+        });*/
 
     	final String downloadPath = util.preparePath(getBaseContext());
 
@@ -218,9 +218,9 @@ public class About extends Activity{
 				}
 		        Intent intent = new Intent(Intent.ACTION_SEND);
 		        intent.setType("image/*");  
-		        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.share); 
+		        intent.putExtra(Intent.EXTRA_SUBJECT, "Share"); 
 				intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file)));
-		        util.startActivity(Intent.createChooser(intent, getString(R.string.sharemode)), true, getBaseContext());
+		        util.startActivity(Intent.createChooser(intent, "Share by"), true, getBaseContext());
 			}
         });
         

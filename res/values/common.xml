@@ -22,4 +22,16 @@
     <string name="backapp">Backup</string>
     <string name="hideapp">Hide</string>
     <string name="hidepage">Hide current page</string>
+    <string name="app_share_text">" "is very cool, check it out..." "</string>
+    <string name="vote">Vote 5 stars if you like it</string>
+    <string name="list_view">List View</string>
+    <string name="grid_view">Grid View</string>
+    <string name="restart">It need restart to change the view. \nRestart now?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="sharemode">Share Mode</string>
+    <string name="share">Share</string>
+    <string name="more">More...</string>
 </resources>
