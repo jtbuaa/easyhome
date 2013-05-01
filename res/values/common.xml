@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <string name="app_name">Easy Launcher</string>
     <string name="help_message">Find you app by not more than 2 click. \nClick app icon to stop it, \nClick app name to launch, \nclick app version to uninstall, \nlong click app name: add shortcut, \nlong click shortcut to remove it.</string>
     <string name="auto_change_wallpaper">change wallpaper by shake</string>
     <string name="share_wallpaper">Share Wallpaper</string>
