@@ -19,6 +19,7 @@ import easy.lib.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -85,47 +86,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-class wrapWallpaperManager {
-	Object mInstance;
-
-	public static void checkAvailable() {}
-	
-	static Method getWallpaperManagerMethod = null;
-	static Method setWallpaperOffsetsMethod = null;
-	static Method setBitmapMethod = null; 
-	static Method suggestDesiredDimensionsMethod = null;
-	static {
-		try {
-			Class c = Class.forName("android.app.WallpaperManager");
-			getWallpaperManagerMethod = c.getMethod("getInstance", new Class[] { Context.class });// api 5
-			setWallpaperOffsetsMethod = c.getMethod("setWallpaperOffsets", new Class[] { IBinder.class, float.class, float.class });// api 5
-			setBitmapMethod = c.getMethod("setBitmap", new Class[] { Bitmap.class });//api 5
-			suggestDesiredDimensionsMethod = c.getMethod("suggestDesiredDimensions", new Class[] { int.class, int.class });//api 5
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}				
-	}
-	
-	void getInstance(Context context) {
-		if (getWallpaperManagerMethod != null)
-			try {mInstance = getWallpaperManagerMethod.invoke(context, context);}
-		catch (Exception e) {mInstance = null;}
-	}
-	void setWallpaperOffsets(IBinder token, float x, float y) {
-		if (setWallpaperOffsetsMethod != null)
-			try {setWallpaperOffsetsMethod.invoke(mInstance, token, x, y);} catch (Exception e) {}
-	}
-	void setBitmap(Bitmap bitmap) {
-		if (setBitmapMethod != null)
-			try {setBitmapMethod.invoke(mInstance, bitmap);} catch (Exception e) {}
-	}
-	void suggestDesiredDimensions(int x, int y) {
-		if (suggestDesiredDimensionsMethod != null)
-			try {suggestDesiredDimensionsMethod.invoke(mInstance, x, y);} catch (Exception e) {}
-	}
-}
-
 
 public class simpleHome extends Activity implements SensorEventListener, sizedRelativeLayout.OnResizeChangeListener {
 
@@ -196,34 +156,11 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 
 	static public com.android.internal.telephony.ITelephony getITelephony(TelephonyManager telMgr) throws Exception { 
 	    Method getITelephonyMethod = telMgr.getClass().getDeclaredMethod("getITelephony"); 
-	    getITelephonyMethod.setAccessible(true);//私有化函数也能使用 
+	    getITelephonyMethod.setAccessible(true);//even private function can use this
 	    return (com.android.internal.telephony.ITelephony)getITelephonyMethod.invoke(telMgr); 
 	} 
 	
-	wrapWallpaperManager mWallpaperManager;
-	static boolean wallpaperManagerAvaiable;
-	static {
-		try {
-			wrapWallpaperManager.checkAvailable();
-			wallpaperManagerAvaiable = true;
-		} catch (Throwable t) {
-			wallpaperManagerAvaiable = false;
-		}
-	}
-	
-    Context mContext;
-	static Method overridePendingTransitionMethod = null;
-
-	static {
-		try {//API 5
-			overridePendingTransitionMethod = Activity.class.getMethod("overridePendingTransition", new Class[] { int.class, int.class });//api 5			
-		} catch (Exception e) {}
-	}
-	
-	void invokeOverridePendingTransition() {
-		if (overridePendingTransitionMethod != null)
-			try {overridePendingTransitionMethod.invoke(mContext, 0, 0);} catch (Exception e) {}
-	}
+	WallpaperManager mWallpaperManager;
 	
 	class MyPagerAdapter extends PagerAdapter{
 	    @Override
@@ -533,25 +470,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*//splash screen
-        Thread splashTimer=new Thread()
-        {
-            public void run(){
-                try{
-        			long curTime = System.currentTimeMillis();  
-        			while (System.currentTimeMillis() - curTime < 3000) {
-                        sleep(1000);//wait for 1000ms
-        			}
-                	Message msg = mAppHandler.obtainMessage();
-                	msg.what = UPDATE_SPLASH;
-                	mAppHandler.sendMessage(msg);//inform UI thread to update UI.
-                }
-                catch(Exception ex){
-                }
-            }
-        };
-        splashTimer.start();*/
-
         paid = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("paid", false);
         
         myPackageName = this.getPackageName();
@@ -643,10 +561,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
         radioGroup = (RadioGroup) findViewById(R.id.radio_hint);
         if (!paid) radioGroup.removeViewAt(0);
         
-        if (wallpaperManagerAvaiable) {
-			mWallpaperManager = new wrapWallpaperManager();
-			mWallpaperManager.getInstance(mContext);
-        }
+		mWallpaperManager = WallpaperManager.getInstance(this);
         
         mainlayout = (ViewPager)findViewById(R.id.mainFrame);
         mainlayout.setLongClickable(true);
@@ -769,7 +684,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		InitTask initTask = new InitTask();
         initTask.execute("");
         
-        Context mContext = this;
 		restartDialog = new AlertDialog.Builder(this).
 				setTitle(R.string.app_name).
 				setIcon(R.drawable.icon).
@@ -789,10 +703,10 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			    		
 			    		//restart the activity. note if set singleinstance or singletask of activity, below will not work on some device.
 						Intent intent = getIntent();
-						invokeOverridePendingTransition();
+						overridePendingTransition(0, 0);
 						intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 						finish();
-						invokeOverridePendingTransition();
+						overridePendingTransition(0, 0);
 						startActivity(intent);
 					}
 				}).
@@ -830,14 +744,14 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
             if(Intent.ACTION_MEDIA_MOUNTED.equals(action)  
                     || Intent.ACTION_MEDIA_SCANNER_STARTED.equals(action)  
                     || Intent.ACTION_MEDIA_SCANNER_FINISHED.equals(action)  
-                    ){// SD卡成功挂载
+                    ){// mount sd card success
             	if (downloadPath != null) 
             		downloadPath = Environment.getExternalStorageDirectory() + "/simpleHome/"; 
             	if (mMenu != null) mMenu.getItem(3).setEnabled(true);
             } else if(Intent.ACTION_MEDIA_REMOVED.equals(action)  
                     || Intent.ACTION_MEDIA_UNMOUNTED.equals(action)  
                     || Intent.ACTION_MEDIA_BAD_REMOVAL.equals(action)  
-                    ){// SD卡挂载失败
+                    ){// fail to mount sd card
             	if (downloadPath != null) 
             		downloadPath = getFilesDir().getPath() + "/";
             	if (mMenu != null) mMenu.getItem(3).setEnabled(false);
@@ -1392,12 +1306,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
     				}
     			});
         		break;
-        	/*case UPDATE_SPLASH:
-        		ImageView splash = (ImageView) findViewById(R.id.splash);
-        		splash.setVisibility(View.INVISIBLE);
-        		apps.setVisibility(View.VISIBLE);
-        		apps.bringToFront();
-        		break;*/
         	}
         }
     };
@@ -1458,7 +1366,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	public void onSensorChanged(SensorEvent arg0) {
 		if (arg0.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {  
 			long curTime = System.currentTimeMillis();  
-			// 每100毫秒检测一次  
+			// detect every 100ms
 			if ((curTime - lastUpdate) > 100) {  
 				long timeInterval = (curTime - lastUpdate);  
 				lastUpdate = curTime;  
