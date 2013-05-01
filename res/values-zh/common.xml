@@ -4,7 +4,6 @@
     <string name="app_name">哈雷主屏</string>
     <string name="help_message">两次点击/滑动之内找到你的应用\n单击应用图标：结束应用\n单击应用名称：启动应用\n单击应用版本：删除应用\n长按应用名称：添加快捷方式\n长按快捷方式：删除快捷方式</string>
     <string name="auto_change_wallpaper">晃动手机换壁纸</string>
-    <string name="about_message">哈雷浏览器是一个小巧、方便，功能完备的浏览器，不但速度飞快，还可以查看网页源码，分享网址和截图给好友。\n\n如需删除收藏/历史请长按该链接。</string>
     <string name="feedback">(可选)有什么建议或反馈吗？比如怎么重现这次的问题？</string>
     <string name="share_wallpaper">分享壁纸</string>
     <string name="share_desktop">分享桌面</string>
@@ -23,5 +22,6 @@
     <string name="help">帮助</string>
     <string name="sharemode">分享方式</string>
     <string name="share">分享</string>
+    <string name="sharetext">专为开发者设计的主屏，</string>
 	<string name="more">更多...</string>
 </resources>
