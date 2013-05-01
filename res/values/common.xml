@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="help_message">Find you app by not more than 2 click. \nClick app icon to stop it, \nClick app name to launch, \nclick app version to uninstall, \nlong click app name: add shortcut, \nlong click shortcut to remove it.</string>
+    <string name="auto_change_wallpaper">change wallpaper by shake</string>
+    <string name="about_message">Easy Browser is a very small, fast, simple and powerful browser. You can view page source, share web address and snap shot to your friends. \n\nLong click history/bookmark to delete it.</string>
+    <string name="share_wallpaper">Share Wallpaper</string>
+    <string name="share_desktop">Share Desktop</string>
+    <string name="warning">Only root user can delete system app.\n\nDelete system app may cause phone can not boot.\n\nPlease think carefully！</string>
+    <string name="menu_choose_home">Switch Home</string>
+    <string name="select">Select Home</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="favoriteapps">Shortcut</string>
+    <string name="systemapps">System</string>
+    <string name="userapps">User</string>
+    <string name="addtoFavo">Add to home</string>
+    <string name="removeFromFavo">Delete</string>
+    <string name="addtoShort">Add to shortcut</string>
+    <string name="removeFromShort">Delete this shortcut</string>
+    <string name="appdetail">Detail...</string>
+    <string name="killapp">Stop it</string>
+    <string name="backapp">Backup</string>
+    <string name="hideapp">Hide</string>
+    <string name="hidepage">Hide current page</string>
+</resources>

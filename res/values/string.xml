@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Easy Launcher</string>
+    <string name="author">easy.browsers@gmail.com</string>
+    <string name="app_share_text">" "is very cool, check it out..." "</string>
+</resources>
