@@ -218,9 +218,9 @@ public class About extends Activity{
 				}
 		        Intent intent = new Intent(Intent.ACTION_SEND);
 		        intent.setType("image/*");  
-		        intent.putExtra(Intent.EXTRA_SUBJECT, "Share"); 
+		        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.share); 
 				intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(file)));
-		        util.startActivity(Intent.createChooser(intent, "Share by"), true, getBaseContext());
+		        util.startActivity(Intent.createChooser(intent, getString(R.string.sharemode)), true, getBaseContext());
 			}
         });
         
