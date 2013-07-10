@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="browser_author">easy.browsers@gmail.com</string>
+	
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="click_for_detail">Click for details</string>
+    <string name="crashed">crashed</string>
+    <string name="sorry">" "crashed, error log is" "</string>
+    <string name="retry">Retry</string>
+    <string name="sendto">Feedback</string>
+    <string name="feedback">do you have any more comments to me? (optional. eg, how to reproduce this crash?)</string>
+
+</resources>
