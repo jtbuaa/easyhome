@@ -252,7 +252,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		case 1://settings
 			return super.onOptionsItemSelected(item);
 		case 2://help dialog
-			Intent intent = new Intent("simple.home.jtbuaa.about");
+			Intent intent = new Intent("about");
+			intent.setClassName(getPackageName(), About.class.getName());
 			intent.putExtra("version", version);
 			intent.putExtra("filename", wallpaperFile);
 			util.startActivity(intent, false, getBaseContext());

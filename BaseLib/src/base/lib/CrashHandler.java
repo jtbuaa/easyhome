@@ -1,28 +1,16 @@
 package base.lib;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
 
 public class CrashHandler implements UncaughtExceptionHandler {
 
@@ -31,9 +19,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	private static CrashHandler INSTANCE = new CrashHandler();
 	private Context mContext;
 
-	// notification id
-	int ID = 22994904;
-	
 	// to ensure only have one CrashHandler
 	private CrashHandler() {
 	}
@@ -83,16 +68,19 @@ public class CrashHandler implements UncaughtExceptionHandler {
 			cause = cause.getCause();
 		}
 		printWriter.close();
+		
+		// notification id
+		Random random = new Random();
+		int id = random.nextInt() + 1000;
 
-		
 		Intent intent = new Intent();
-		intent.setAction(mContext.getPackageName() + ".crashControl");
-		
+		intent.setAction("crashControl");
+		intent.setClassName(mContext.getPackageName(), CrashControl.class.getName());
 		intent.putExtra("errorMsg", writer.toString());
-		intent.putExtra("id", ID);
+		intent.putExtra("id", id);
 		// request_code will help to diff different thread
 		PendingIntent contentIntent = PendingIntent.getActivity(mContext,
-				ID, intent,
+				id, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		Notification notification = new Notification(
@@ -105,7 +93,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 				mContext.getString(R.string.click_for_detail), contentIntent);
 		
 		NotificationManager nManager = (NotificationManager) mContext.getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-		nManager.notify(ID, notification);
+		nManager.notify(id, notification);
 
 		return true;
 	}
