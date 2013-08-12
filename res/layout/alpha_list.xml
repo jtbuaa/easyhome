@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/alpha"
+	android:layout_height="match_parent" 
+	android:layout_width="match_parent"
+	android:layout_centerInParent="true"
+	android:gravity="center"
+	android:textSize="14dip"
+	android:textColor="#80FFFFFF"
+	android:textColorHighlight="#80000000"
+   	android:background="@drawable/circle"
+   	android:focusable="true"
+   	android:focusableInTouchMode="true"
+	/>
+	
