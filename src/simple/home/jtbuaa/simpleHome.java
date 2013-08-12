@@ -576,7 +576,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.setClassName("harley.browsers", "easy.lib.SimpleBrowser");
+				intent.setClassName("harley.browsers", "harley.lib.HarleyBrowser");
 				if (!util.startActivity(intent, false, getBaseContext())) {
 					intent.setClassName("easy.browser", "easy.lib.SimpleBrowser");
 					if (!util.startActivity(intent, false, getBaseContext())) {
