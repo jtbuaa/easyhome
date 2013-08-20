@@ -576,12 +576,12 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.setClassName("harley.browsers", "harley.lib.HarleyBrowser");
+				intent.setPackage("harley.browsers");
 				if (!util.startActivity(intent, false, getBaseContext())) {
-					intent.setClassName("easy.browser", "easy.lib.SimpleBrowser");
+					intent.setPackage("easy.browser");
 					if (!util.startActivity(intent, false, getBaseContext())) {
 						//intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=harley.browsers"));
-						intent.setClassName(myPackageName, "easy.lib.SimpleBrowser");// runtime error. VFY: unable to resolve static field
+						intent.setPackage(myPackageName);// runtime error. VFY: unable to resolve static field
 						util.startActivity(intent, true, getBaseContext());
 					}
 				}
