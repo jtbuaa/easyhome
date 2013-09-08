@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_centerInParent="true"
 	android:gravity="center"
-	android:textSize="14dip"
+	android:textSize="14sp"
 	android:textColor="#80FFFFFF"
 	android:textColorHighlight="#80000000"
    	android:background="@drawable/circle"
