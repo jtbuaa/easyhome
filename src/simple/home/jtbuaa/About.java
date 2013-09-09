@@ -253,19 +253,7 @@ public class About extends Activity{
         rotateMode.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				int checked = rotateMode.indexOfChild(findViewById(rotateMode.getCheckedRadioButtonId()));
-				switch(checked) {
-				case 1:
-					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-					break;
-				case 2:
-					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-					break;
-				case 3:
-					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-					break;
-				}
-				editor.putInt("rotate_mode", checked);
+				editor.putInt("rotate_mode", rotateMode.indexOfChild(findViewById(rotateMode.getCheckedRadioButtonId())));
 				editor.commit();
 			}
         });

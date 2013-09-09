@@ -106,6 +106,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	boolean busy;
 	SharedPreferences perferences;
 	String wallpaperFile = "";
+	int rotateMode = 1;
 	
 
 	AppAlphaList sysAlphaList, userAlphaList;
@@ -225,8 +226,14 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	    	sensorMgr.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_UI);
 	    	busy = false;
 		}
-		else { 
-			sensorMgr.unregisterListener(this);
+		else sensorMgr.unregisterListener(this);
+
+		int tmpMode = perferences.getInt("rotate_mode", 1);
+		if (rotateMode != tmpMode) {
+			rotateMode = tmpMode;
+			if (rotateMode == 1) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+			else if (rotateMode == 2) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 
 		super.onResume();
