@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -32,11 +33,15 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +50,9 @@ import base.lib.util;
 public class About extends Activity{
 	
 	CheckBox cbShake;
+	RadioGroup rotateMode;
 	SharedPreferences perferences;
+	SharedPreferences.Editor editor;
 
 	String mPackageName;
 	PackageManager mPM;
@@ -225,18 +232,44 @@ public class About extends Activity{
         });
         
 		perferences = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = perferences.edit();
+		 
         cbShake = (CheckBox) findViewById(R.id.change_wallpaper);
         cbShake.setEnabled(perferences.getBoolean("shake_enabled", false));
         cbShake.setChecked(perferences.getBoolean("shake", false));
         cbShake.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-        		SharedPreferences.Editor editor = perferences.edit();
         		editor.putBoolean("shake", cbShake.isChecked());
         		editor.commit();
 			}
         });
         
+        rotateMode = (RadioGroup) findViewById(R.id.rotate_mode);
+		int tmpMode = perferences.getInt("rotate_mode", 1);
+		if (tmpMode < 0) tmpMode = 1;
+		if (tmpMode > 3) tmpMode = 3;
+		((RadioButton) rotateMode.getChildAt(tmpMode)).setChecked(true);
+        rotateMode.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				int checked = rotateMode.indexOfChild(findViewById(rotateMode.getCheckedRadioButtonId()));
+				switch(checked) {
+				case 1:
+					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+					break;
+				case 2:
+					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+					break;
+				case 3:
+					setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+					break;
+				}
+				editor.putInt("rotate_mode", checked);
+				editor.commit();
+			}
+        });
+
         /*TextView tvFellow = (TextView) findViewById(R.id.fellow);
         tvFellow.setText(Html.fromHtml("<u>腾讯应用中心</u>"));
         tvFellow.setOnClickListener(new OnClickListener() {

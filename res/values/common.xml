@@ -35,4 +35,8 @@
     <string name="share">Share</string>
     <string name="sharetext">specific for developers, get at </string>
     <string name="more">More...</string>
+    <string name="rotate_mode">Rotate" "</string>
+    <string name="system">System</string>
+    <string name="landscape">landscape</string>
+    <string name="portrait">Portrait</string>
 </resources>
