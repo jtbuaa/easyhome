@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"/>
     
 	<uses-sdk android:minSdkVersion="5"/>
     <supports-screens
@@ -23,6 +24,7 @@
         />
 
     <application android:icon="@drawable/icon"
+        android:sharedUserId="android.uid.system"
     	android:debuggable="false"
     	android:name="base.lib.BaseApp" 
        	android:theme="@style/Theme"
