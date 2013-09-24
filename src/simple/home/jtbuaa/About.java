@@ -89,23 +89,8 @@ public class About extends Activity{
 		
 		String res = runCmd("cat", "/proc/cpuinfo")
 		+ "\nAndroid " + android.os.Build.VERSION.RELEASE
-		+ "\n" + dm.widthPixels+" * "+dm.heightPixels;
+		+ "\n" + dm.widthPixels+" * "+dm.heightPixels + ", density:" + dm.density;
 		
-		/*ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningAppProcessInfo> appList = am.getRunningAppProcesses(); 
-        for (int i = 0; i < appList.size(); i++) {
-    		RunningAppProcessInfo as = (RunningAppProcessInfo) appList.get(i);
-    		if (as.processName.equals(myPackageName)) {
-        		try {//memory used by me
-        			Debug.MemoryInfo info = am.getProcessMemoryInfo(new int[] {pid.getInt(as)})[0];
-        			Log.d("==============", myPackageName + " " + info.getTotalPss()+"kb");
-    			} catch (Exception e) {
-    				e.printStackTrace();
-    			}
-    			break;
-    		}
-        }*/
-
 		String ipaddr = ip();
 		if (!ipaddr.equals(""))
 			res += "\n" + ipaddr;
@@ -258,15 +243,6 @@ public class About extends Activity{
 			}
         });
 
-        /*TextView tvFellow = (TextView) findViewById(R.id.fellow);
-        tvFellow.setText(Html.fromHtml("<u>腾讯应用中心</u>"));
-        tvFellow.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://app.qq.com/g/s?aid=index&g_f=990424"));
-				util.startActivity(intent, false, getBaseContext());
-			}
-		});*/
         Button btnSwitchHome = (Button) findViewById(R.id.switch_home);
         btnSwitchHome.setOnClickListener(new OnClickListener() {
 			@Override
