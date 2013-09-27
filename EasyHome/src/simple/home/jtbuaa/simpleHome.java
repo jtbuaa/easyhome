@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -106,6 +107,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	boolean busy;
 	SharedPreferences perferences;
 	String wallpaperFile = "";
+	int rotateMode = 1;
 	
 
 	AppAlphaList sysAlphaList, userAlphaList;
@@ -225,8 +227,14 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	    	sensorMgr.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_UI);
 	    	busy = false;
 		}
-		else { 
-			sensorMgr.unregisterListener(this);
+		else sensorMgr.unregisterListener(this);
+
+		int tmpMode = perferences.getInt("rotate_mode", 1);
+		if (rotateMode != tmpMode) {
+			rotateMode = tmpMode;
+			if (rotateMode == 1) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+			else if (rotateMode == 2) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 
 		super.onResume();
@@ -352,7 +360,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			writeFile("short");	//save shortcut to file
 			break;
 		case 4://get app detail info
-			showDetail(info.activityInfo.applicationInfo.sourceDir, info.activityInfo.packageName, info.loadLabel(pm), info.loadIcon(pm));
+			showDetail(info.activityInfo.applicationInfo, info);
 			break;
 		case 5://add to home
 			if (favoAdapter.getPosition(info) < 0) { 
@@ -380,17 +388,22 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
     		return true;//break can't finish on some device?
 		case 9://get package detail info
 			PackageInfo pi = (PackageInfo) selected_case.mRi; 
-			showDetail(pi.applicationInfo.sourceDir, pi.packageName, pi.applicationInfo.loadLabel(pm), pi.applicationInfo.loadIcon(pm));
+			showDetail(pi.applicationInfo, null);
 			break;
 		}
 		return false;
 	}
 
-	void showDetail(final String sourceDir, final String packageName, final CharSequence label, Drawable icon) {
+	void showDetail(final ApplicationInfo info, ResolveInfo aInfo) {
+		final String sourceDir = info.sourceDir;
+		final String label = (String) info.loadLabel(pm);
+		final String packageName = info.packageName;
+		String shortName = packageName;
+		if (aInfo != null) shortName += "/" + new ComponentName(packageName, aInfo.activityInfo.name).getShortClassName();
 		AlertDialog detailDlg = new AlertDialog.Builder(this).
 				setTitle(label).
-				setIcon(icon).
-				setMessage(packageName + "\n\n" + sourceDir).
+				setIcon(info.loadIcon(pm)).
+				setMessage(shortName + "\n\n" + sourceDir).
 				setPositiveButton(R.string.share, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -576,12 +589,12 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.setClassName("harley.browsers", "easy.lib.SimpleBrowser");
+				intent.setPackage("harley.browsers");
 				if (!util.startActivity(intent, false, getBaseContext())) {
-					intent.setClassName("easy.browser", "easy.lib.SimpleBrowser");
+					intent.setPackage("easy.browser");
 					if (!util.startActivity(intent, false, getBaseContext())) {
 						//intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=harley.browsers"));
-						intent.setClassName(myPackageName, "easy.lib.SimpleBrowser");// runtime error. VFY: unable to resolve static field
+						intent.setPackage(myPackageName);// runtime error. VFY: unable to resolve static field
 						util.startActivity(intent, true, getBaseContext());
 					}
 				}
