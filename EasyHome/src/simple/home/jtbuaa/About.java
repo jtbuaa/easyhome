@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -32,11 +33,15 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +50,9 @@ import base.lib.util;
 public class About extends Activity{
 	
 	CheckBox cbShake;
+	RadioGroup rotateMode;
 	SharedPreferences perferences;
+	SharedPreferences.Editor editor;
 
 	String mPackageName;
 	PackageManager mPM;
@@ -82,23 +89,8 @@ public class About extends Activity{
 		
 		String res = runCmd("cat", "/proc/cpuinfo")
 		+ "\nAndroid " + android.os.Build.VERSION.RELEASE
-		+ "\n" + dm.widthPixels+" * "+dm.heightPixels;
+		+ "\n" + dm.widthPixels+" * "+dm.heightPixels + ", density:" + dm.density;
 		
-		/*ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningAppProcessInfo> appList = am.getRunningAppProcesses(); 
-        for (int i = 0; i < appList.size(); i++) {
-    		RunningAppProcessInfo as = (RunningAppProcessInfo) appList.get(i);
-    		if (as.processName.equals(myPackageName)) {
-        		try {//memory used by me
-        			Debug.MemoryInfo info = am.getProcessMemoryInfo(new int[] {pid.getInt(as)})[0];
-        			Log.d("==============", myPackageName + " " + info.getTotalPss()+"kb");
-    			} catch (Exception e) {
-    				e.printStackTrace();
-    			}
-    			break;
-    		}
-        }*/
-
 		String ipaddr = ip();
 		if (!ipaddr.equals(""))
 			res += "\n" + ipaddr;
@@ -225,27 +217,32 @@ public class About extends Activity{
         });
         
 		perferences = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = perferences.edit();
+		 
         cbShake = (CheckBox) findViewById(R.id.change_wallpaper);
         cbShake.setEnabled(perferences.getBoolean("shake_enabled", false));
         cbShake.setChecked(perferences.getBoolean("shake", false));
         cbShake.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-        		SharedPreferences.Editor editor = perferences.edit();
         		editor.putBoolean("shake", cbShake.isChecked());
         		editor.commit();
 			}
         });
         
-        /*TextView tvFellow = (TextView) findViewById(R.id.fellow);
-        tvFellow.setText(Html.fromHtml("<u>腾讯应用中心</u>"));
-        tvFellow.setOnClickListener(new OnClickListener() {
+        rotateMode = (RadioGroup) findViewById(R.id.rotate_mode);
+		int tmpMode = perferences.getInt("rotate_mode", 1);
+		if (tmpMode < 0) tmpMode = 1;
+		if (tmpMode > 3) tmpMode = 3;
+		((RadioButton) rotateMode.getChildAt(tmpMode)).setChecked(true);
+        rotateMode.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://app.qq.com/g/s?aid=index&g_f=990424"));
-				util.startActivity(intent, false, getBaseContext());
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				editor.putInt("rotate_mode", rotateMode.indexOfChild(findViewById(rotateMode.getCheckedRadioButtonId())));
+				editor.commit();
 			}
-		});*/
+        });
+
         Button btnSwitchHome = (Button) findViewById(R.id.switch_home);
         btnSwitchHome.setOnClickListener(new OnClickListener() {
 			@Override

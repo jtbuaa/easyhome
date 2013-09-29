@@ -61,7 +61,7 @@ public class WrapAdView {
 		}
 	}
 
-	boolean isReady() {
+	public boolean isReady() {
 		if (mInstance != null)
 			return mInstance.isReady();
 		else return false;

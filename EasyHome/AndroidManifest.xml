@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"/>
     
 	<uses-sdk android:minSdkVersion="5"/>
     <supports-screens
@@ -23,6 +23,7 @@
         />
 
     <application android:icon="@drawable/icon"
+        android:sharedUserId="android.uid.system"
     	android:debuggable="false"
     	android:name="base.lib.BaseApp" 
        	android:theme="@style/Theme"
@@ -66,7 +67,7 @@
             android:launchMode="singleInstance"
             android:noHistory="true" >
             <intent-filter>
-                <action android:name="simple.home.jtbuaa.crashControl" />
+                <action android:name="crashControl" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -76,7 +77,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/app_name">
             <intent-filter>
-            	<action android:name="simple.home.jtbuaa.about"/>
+            	<action android:name="about"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

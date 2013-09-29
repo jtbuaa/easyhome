@@ -1,5 +1,7 @@
 package simple.home.jtbuaa;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -105,7 +107,7 @@ public abstract class AlphaList<T> {
     	AppList.setOnScrollListener(new OnScrollListener() {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				if ((mApps.size() > 0) && (!DuringSelection)) {//revert the focus of alpha list when scroll app list
+				if ((mApps.size() > firstVisibleItem) && (!DuringSelection)) {//revert the focus of alpha list when scroll app list
 					String alpha = getAlpha(mApps.get(firstVisibleItem));
 					int pos = alphaAdapter.getPosition(alpha);
 					if (pos != mSelected) {
@@ -220,6 +222,13 @@ public abstract class AlphaList<T> {
 		return mApps.size();
 	}
 	
+	static Method forceStopPackage = null;
+	static {
+		try {
+			forceStopPackage = ActivityManager.class.getDeclaredMethod("forceStopPackage", String.class);
+		} catch(Exception e) {}
+	}
+	
     private class AppListAdapter extends ArrayAdapter<T> {
     	ArrayList localApplist;
         public AppListAdapter(Context context, List<T> apps) {
@@ -249,10 +258,23 @@ public abstract class AlphaList<T> {
                 btnIcon.setOnTouchListener(new OnTouchListener() {
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {//kill process when click
+						ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 						String pn = getPackageName(info);
 						if (!pn.equals("simple.home.jtbuaa")) {
-							ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-							am.restartPackage(pn);
+							if (forceStopPackage == null) am.restartPackage(pn);
+							else
+								try {
+									forceStopPackage.invoke(am, pn);
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (InvocationTargetException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							//but we need to know when will it restart by itself?
 							textView1.setTextColor(whiteColor);//set color back after kill it.
 						}

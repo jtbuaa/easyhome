@@ -58,20 +58,24 @@ public class WrapInterstitialAd {
 
 		@Override
 		public void onDismissScreen(Ad arg0) {
-			// TODO Auto-generated method stub
-			
+			if (mHandler != null) {
+				Message dismiss = mHandler.obtainMessage();
+				dismiss.what = -5;
+				mHandler.sendMessage(dismiss);
+			}
 		}
 
 		@Override
 		public void onLeaveApplication(Ad arg0) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onPresentScreen(Ad arg0) {
-			// TODO Auto-generated method stub
-			
+			if (mHandler != null) {
+				Message dismiss = mHandler.obtainMessage();
+				dismiss.what = -6;
+				mHandler.sendMessage(dismiss);
+			}
 		}
 	}
 }
