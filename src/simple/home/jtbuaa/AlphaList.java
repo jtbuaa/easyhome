@@ -1,6 +1,5 @@
 package simple.home.jtbuaa;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +31,6 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
@@ -261,20 +259,10 @@ public abstract class AlphaList<T> {
 						ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 						String pn = getPackageName(info);
 						if (!pn.equals("simple.home.jtbuaa")) {
-							if (forceStopPackage == null) am.restartPackage(pn);
-							else
-								try {
-									forceStopPackage.invoke(am, pn);
-								} catch (IllegalArgumentException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (InvocationTargetException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+							am.restartPackage(pn);
+							if (forceStopPackage != null)
+								try {forceStopPackage.invoke(am, pn);
+								} catch (Exception e) {e.printStackTrace();}
 							//but we need to know when will it restart by itself?
 							textView1.setTextColor(whiteColor);//set color back after kill it.
 						}
