@@ -153,12 +153,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	IPackageStatsObserver sizeObserver;
 	static int sizeM = 1024*1024; 
 
-	static public com.android.internal.telephony.ITelephony getITelephony(TelephonyManager telMgr) throws Exception { 
-	    Method getITelephonyMethod = telMgr.getClass().getDeclaredMethod("getITelephony"); 
-	    getITelephonyMethod.setAccessible(true);//even private function can use this
-	    return (com.android.internal.telephony.ITelephony)getITelephonyMethod.invoke(telMgr); 
-	} 
-	
 	WallpaperManager mWallpaperManager;
 	
 	class MyPagerAdapter extends PagerAdapter{
