@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 import base.lib.HanziToPinyin;
+import base.lib.WrapInterstitialAd;
 import base.lib.util;
 
 import android.app.Activity;
@@ -450,7 +451,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		detailDlg.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(canBackup);//not backup if no SDcard.
 	}
 	
-    @SuppressWarnings("unchecked")
+	WrapInterstitialAd interstitialAd = null;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -535,6 +536,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
         
 		mWallpaperManager = WallpaperManager.getInstance(this);
         
+		if (interstitialAd == null) interstitialAd = new WrapInterstitialAd(this, "a152395b161f6e6", mAppHandler);
+		interstitialAd.loadAd();
         mainlayout = (ViewPager)findViewById(R.id.mainFrame);
         mainlayout.setLongClickable(true);
         myPagerAdapter = new MyPagerAdapter();
@@ -547,8 +550,20 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				}
 			}
 
+			int edgePressure = 0;
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+				if (positionOffsetPixels == 0) {
+					if ((position == 0) || (position == myPagerAdapter.getCount()-1))
+						edgePressure += 1;
+					else edgePressure = 0;
+				}
+				else edgePressure = 0;
+				if (edgePressure > 3 && interstitialAd != null && interstitialAd.isReady()) {
+					interstitialAd.show();
+					interstitialAd.loadAd();
+				}
+
 				if (!shakeWallpaper) {//don't move wallpaper if change wallpaper by shake
 					if (token == null) token = mainlayout.getWindowToken();//any token from a component is ok
 					mWallpaperManager.setWallpaperOffsets(token, 
@@ -563,11 +578,9 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			@Override
 			public void onPageSelected(int arg0) {
 			}
-        	
         });
         mainlayout.setCurrentItem(homeTab);
 
-        
 		mSysApps = new ArrayList<ResolveInfo>();
 		mUserApps = new ArrayList<ResolveInfo>();
 		mFavoApps = new ArrayList<ResolveInfo>();

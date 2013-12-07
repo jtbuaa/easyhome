@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="simple.home.jtbuaa" 
-      android:versionName="1.6.0" android:versionCode="26">
+    package="simple.home.jtbuaa"
+    android:versionCode="26"
+    android:versionName="1.6.0" >
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
-    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"/>
+    <!-- uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" / -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    
-	<uses-sdk android:minSdkVersion="5"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-sdk android:minSdkVersion="5" />
+
     <supports-screens
         android:anyDensity="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        />
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
-    <application android:icon="@drawable/icon"
+    <application
+        android:name="base.lib.BaseApp"
+        android:debuggable="false"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
         android:sharedUserId="android.uid.system"
-    	android:debuggable="false"
-    	android:name="base.lib.BaseApp" 
-       	android:theme="@style/Theme"
-       	android:hardwareAccelerated="true"
-       	android:largeHeap="true"
-    	android:label="@string/app_name">
+        android:theme="@style/Theme" >
 
         <!-- home is singleInstance and embedded browser is singleTask. -->
         <!-- if browser is singleInstance, then can't return to browser after click admob banner -->
         <!-- if both are singleTask, then it will call onCreate of browser after click admob banner -->
-        <activity android:name=".simpleHome"
-        	android:excludeFromRecents="true"
-        	android:launchMode="singleInstance"
+        <activity
+            android:name=".simpleHome"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="@string/app_name">
-                  
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-            
-        <activity android:name=".FakeHome"
-        	android:enabled="false"
-        	android:label="@string/app_name"
-            android:configChanges="keyboard|keyboardHidden|orientation">
+        <activity
+            android:name=".FakeHome"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:enabled="false"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="base.lib.CrashControl"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
@@ -73,21 +79,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".About"
+        <activity
+            android:name=".About"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
-            	<action android:name="about"/>
+                <action android:name="about" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.google.ads.AdActivity"
-        	android:label="@string/app_name"
-        	android:process="easy.browser"
+        <activity
+            android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            />
-    
+            android:label="@string/app_name" />
     </application>
-</manifest> 
+
+</manifest>
