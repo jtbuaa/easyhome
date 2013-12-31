@@ -89,6 +89,7 @@ public class About extends Activity{
 		
 		String res = runCmd("cat", "/proc/cpuinfo")
 		+ "\nAndroid " + android.os.Build.VERSION.RELEASE
+		+ " SDK" + android.os.Build.VERSION.SDK_INT
 		+ "\n" + dm.widthPixels+" * "+dm.heightPixels + ", density:" + dm.density;
 		
 		String ipaddr = ip();
