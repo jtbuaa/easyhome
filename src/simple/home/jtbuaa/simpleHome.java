@@ -84,6 +84,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class simpleHome extends Activity implements SensorEventListener, sizedRelativeLayout.OnResizeChangeListener {
@@ -244,9 +245,23 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			else ;
 		}
 
+		int m = (int) (5*dm.density);
+		int mTop = (int) (35*dm.density);
 		boolean showTitle = perferences.getBoolean("title", true);
-		if (showTitle) radioGroup.setVisibility(View.VISIBLE);
-		else radioGroup.setVisibility(View.GONE);
+		if (showTitle) {
+			radioGroup.setVisibility(View.VISIBLE);
+			LayoutParams lp = (LayoutParams) sysAlphaList.AppList.getLayoutParams();
+			lp.setMargins(m, mTop, m, m);
+			lp = (LayoutParams) userAlphaList.AppList.getLayoutParams();
+			lp.setMargins(m, mTop, m, m);
+		}
+		else {
+			radioGroup.setVisibility(View.GONE);
+			LayoutParams lp = (LayoutParams) sysAlphaList.AppList.getLayoutParams();
+			lp.setMargins(m, m, m, m);
+			lp = (LayoutParams) userAlphaList.AppList.getLayoutParams();
+			lp.setMargins(m, m, m, m);
+		}
 
 		boolean showAlpha = perferences.getBoolean("alpha", true);
 		if (showAlpha) {
