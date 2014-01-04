@@ -49,116 +49,14 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/share_desktop"
+            android:id="@+id/switch_home"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dip"
             android:background="@drawable/button_layout"
             android:singleLine="true"
-            android:text="@string/share_desktop"
+            android:text="@string/menu_choose_home"
             android:textSize="16sp" />
-
-        <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="5dip"
-                android:fadeScrollbars="true" >
-
-                <RadioGroup
-                    android:id="@+id/rotate_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rotate_mode"
-                        android:textColor="#f0030f03"
-                        android:textSize="16sp" />
-
-                    <RadioButton
-                        android:text="@string/system"
-                        android:textColor="#f0030f03" />
-
-                    <RadioButton
-                        android:text="@string/landscape"
-                        android:textColor="#f0030f03" />
-
-                    <RadioButton
-                        android:text="@string/portrait"
-                        android:textColor="#f0030f03" />
-                </RadioGroup>
-            </HorizontalScrollView>
-
-        <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="5dip"
-                android:fadeScrollbars="true" >
-
-                <RadioGroup
-                    android:id="@+id/system_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/systemapps"
-                        android:textColor="#f0030f03"
-                        android:textSize="16sp" />
-
-                    <RadioButton
-                        android:text="@string/grid_view"
-                        android:textColor="#f0030f03" />
-
-                    <RadioButton
-                        android:text="@string/list_view"
-                        android:textColor="#f0030f03" />
-                </RadioGroup>
-            </HorizontalScrollView>
-
-        <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="5dip"
-                android:fadeScrollbars="true" >
-
-                <RadioGroup
-                    android:id="@+id/user_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/userapps"
-                        android:textColor="#f0030f03"
-                        android:textSize="16sp" />
-
-                    <RadioButton
-                        android:text="@string/grid_view"
-                        android:textColor="#f0030f03" />
-
-                    <RadioButton
-                        android:text="@string/list_view"
-                        android:textColor="#f0030f03" />
-                </RadioGroup>
-            </HorizontalScrollView>
-
-        <CheckBox
-            android:id="@+id/show_index"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="@string/show_index"
-            android:textColor="#f0030f03" />
 
         <CheckBox
             android:id="@+id/show_title"
@@ -166,6 +64,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/show_title"
+            android:textColor="#f0030f03" />
+
+        <CheckBox
+            android:id="@+id/show_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/show_index"
             android:textColor="#f0030f03" />
 
         <CheckBox
@@ -186,24 +92,99 @@
             android:text="@string/share_wallpaper"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/mailto"
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="5dip"
-            android:textColor="#F08080F0"
-            android:textSize="16sp" />
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="5dip"
+            android:fadeScrollbars="true" >
 
-        <Button
-            android:id="@+id/switch_home"
-            android:layout_width="fill_parent"
+            <RadioGroup
+                android:id="@+id/rotate_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rotate_mode"
+                    android:textColor="#f0030f03"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:text="@string/system"
+                    android:textColor="#f0030f03" />
+
+                <RadioButton
+                    android:text="@string/landscape"
+                    android:textColor="#f0030f03" />
+
+                <RadioButton
+                    android:text="@string/portrait"
+                    android:textColor="#f0030f03" />
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
-            android:background="@drawable/button_layout"
-            android:singleLine="true"
-            android:text="@string/menu_choose_home"
-            android:textSize="16sp" />
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="5dip"
+            android:fadeScrollbars="true" >
+
+            <RadioGroup
+                android:id="@+id/user_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/userapps"
+                    android:textColor="#f0030f03"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:text="@string/grid_view"
+                    android:textColor="#f0030f03" />
+
+                <RadioButton
+                    android:text="@string/list_view"
+                    android:textColor="#f0030f03" />
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="5dip"
+            android:fadeScrollbars="true" >
+
+            <RadioGroup
+                android:id="@+id/system_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/systemapps"
+                    android:textColor="#f0030f03"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:text="@string/grid_view"
+                    android:textColor="#f0030f03" />
+
+                <RadioButton
+                    android:text="@string/list_view"
+                    android:textColor="#f0030f03" />
+            </RadioGroup>
+        </HorizontalScrollView>
     </LinearLayout>
 
 </ScrollView>

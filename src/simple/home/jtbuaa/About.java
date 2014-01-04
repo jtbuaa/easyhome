@@ -28,7 +28,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -126,9 +125,6 @@ public class About extends Activity{
         mPackageName = this.getPackageName();
         mPM = getPackageManager();
         
-        TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(getString(R.string.app_name) + " " + getIntent().getStringExtra("version"));
-        
         TextView tvHelp = (TextView) findViewById(R.id.help);
         tvHelp.setText(getString(R.string.help_message));
         
@@ -146,16 +142,6 @@ public class About extends Activity{
 			}
         });
 
-        TextView tvMailTo = (TextView) findViewById(R.id.mailto);
-        tvMailTo.setText(Html.fromHtml("<u>"+ getString(R.string.author) +"</u>"));
-        tvMailTo.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.author), null));
-				util.startActivity(intent, true, getBaseContext());
-			}
-		});
-        
         TextView tvInfo = (TextView) findViewById(R.id.info);
         tvInfo.setText(aboutMsg());
         
@@ -178,14 +164,14 @@ public class About extends Activity{
 
     	final String downloadPath = util.preparePath(getBaseContext());
 
-        Button btnShareDesktop = (Button) findViewById(R.id.share_desktop);
+        /*Button btnShareDesktop = (Button) findViewById(R.id.share_desktop);
         btnShareDesktop.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intentShareDesktop = new Intent("simpleHome.action.SHARE_DESKTOP");
                 sendBroadcast(intentShareDesktop);//need get screen of home, so send intent to home
 			}
-        });
+        });*/
 
         Button btnShareWallpaper = (Button) findViewById(R.id.share_wallpaper);
         btnShareWallpaper.setOnClickListener(new OnClickListener() {
