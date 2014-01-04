@@ -241,7 +241,7 @@ public class About extends Activity{
 			}
         });
 
-        systemApp = (RadioGroup) findViewById(R.id.system_mode);
+        /*systemApp = (RadioGroup) findViewById(R.id.system_mode);
 		boolean isGrid = perferences.getBoolean("system", true);
 		if (isGrid) tmpMode = 1;
 		else tmpMode = 2;
@@ -267,7 +267,7 @@ public class About extends Activity{
 				if (grid == 1) editor.putBoolean("user", true);
 				else editor.putBoolean("user", false);
 			}
-        });
+        });*/
 
         Button btnSwitchHome = (Button) findViewById(R.id.switch_home);
         btnSwitchHome.setOnClickListener(new OnClickListener() {

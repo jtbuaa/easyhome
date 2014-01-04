@@ -105,8 +105,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	SharedPreferences perferences;
 	String wallpaperFile = "";
 	int rotateMode = 1;
-	int systemMode = 1;
-	int userMode = 2;
+	boolean systemIsGrid = true;
+	boolean userIsGrid = false;
 
 
 	AppAlphaList sysAlphaList, userAlphaList;
@@ -230,17 +230,17 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 
-		tmpMode = perferences.getInt("system_mode", 1);
-		if (systemMode != tmpMode) {
-			systemMode = tmpMode;
-			if (systemMode == 1) ;
+		boolean isGrid = perferences.getBoolean("system", true);
+		if (systemIsGrid != isGrid) {
+			systemIsGrid = isGrid;
+			if (systemIsGrid) ;
 			else ;
 		}
 
-		tmpMode = perferences.getInt("user_mode", 2);
-		if (userMode != tmpMode) {
-			userMode = tmpMode;
-			if (userMode == 1) ;
+		isGrid = perferences.getBoolean("user", false);
+		if (userIsGrid != isGrid) {
+			userIsGrid = isGrid;
+			if (userIsGrid) ;
 			else ;
 		}
 
