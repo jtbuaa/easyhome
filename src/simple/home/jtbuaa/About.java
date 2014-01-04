@@ -2,7 +2,6 @@ package simple.home.jtbuaa;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,21 +20,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,8 +44,8 @@ import base.lib.util;
 
 public class About extends Activity{
 	
-	CheckBox cbShake;
-	RadioGroup rotateMode;
+	CheckBox cbShake, cbAlpha, cbTitle;
+	RadioGroup rotateMode, systemApp, userApp;
 	SharedPreferences perferences;
 	SharedPreferences.Editor editor;
 
@@ -227,7 +222,24 @@ public class About extends Activity{
 			@Override
 			public void onClick(View v) {
         		editor.putBoolean("shake", cbShake.isChecked());
-        		editor.commit();
+			}
+        });
+        
+        cbAlpha = (CheckBox) findViewById(R.id.show_index);
+        cbAlpha.setChecked(perferences.getBoolean("alpha", true));
+        cbAlpha.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+        		editor.putBoolean("alpha", cbAlpha.isChecked());
+			}
+        });
+        
+        cbTitle = (CheckBox) findViewById(R.id.show_title);
+        cbTitle.setChecked(perferences.getBoolean("title", true));
+        cbTitle.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+        		editor.putBoolean("title", cbTitle.isChecked());
 			}
         });
         
@@ -240,7 +252,34 @@ public class About extends Activity{
 			@Override
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				editor.putInt("rotate_mode", rotateMode.indexOfChild(findViewById(rotateMode.getCheckedRadioButtonId())));
-				editor.commit();
+			}
+        });
+
+        systemApp = (RadioGroup) findViewById(R.id.system_mode);
+		boolean isGrid = perferences.getBoolean("system", true);
+		if (isGrid) tmpMode = 1;
+		else tmpMode = 2;
+		((RadioButton) systemApp.getChildAt(tmpMode)).setChecked(true);
+        systemApp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				int grid = systemApp.indexOfChild(findViewById(systemApp.getCheckedRadioButtonId()));
+				if (grid == 1) editor.putBoolean("system", true);
+				else editor.putBoolean("system", false);
+			}
+        });
+
+        userApp = (RadioGroup) findViewById(R.id.user_mode);
+		isGrid = perferences.getBoolean("user", false);
+		if (isGrid) tmpMode = 1;
+		else tmpMode = 2;
+		((RadioButton) userApp.getChildAt(tmpMode)).setChecked(true);
+		userApp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				int grid = userApp.indexOfChild(findViewById(userApp.getCheckedRadioButtonId()));
+				if (grid == 1) editor.putBoolean("user", true);
+				else editor.putBoolean("user", false);
 			}
         });
 
@@ -256,6 +295,13 @@ public class About extends Activity{
 				}
 			}
         });
+	}
+	
+	@Override
+	protected void onPause() {
+		editor.commit();
+        
+		super.onPause();
 	}
 	
 	@Override

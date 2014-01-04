@@ -10,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -64,10 +63,8 @@ import android.provider.CallLog.Calls;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -79,7 +76,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -109,7 +105,9 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	SharedPreferences perferences;
 	String wallpaperFile = "";
 	int rotateMode = 1;
-	
+	int systemMode = 1;
+	int userMode = 2;
+
 
 	AppAlphaList sysAlphaList, userAlphaList;
 	//alpha list related
@@ -231,6 +229,28 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			else if (rotateMode == 2) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
+
+		tmpMode = perferences.getInt("system_mode", 1);
+		if (systemMode != tmpMode) {
+			systemMode = tmpMode;
+			if (systemMode == 1) ;
+			else ;
+		}
+
+		tmpMode = perferences.getInt("user_mode", 2);
+		if (userMode != tmpMode) {
+			userMode = tmpMode;
+			if (userMode == 1) ;
+			else ;
+		}
+
+		boolean showTitle = perferences.getBoolean("title", true);
+		if (showTitle) radioGroup.setVisibility(View.VISIBLE);
+		else radioGroup.setVisibility(View.GONE);
+
+		boolean showAlpha = perferences.getBoolean("alpha", true);
+		if (showAlpha) ;
+		else ;
 
 		super.onResume();
 	}

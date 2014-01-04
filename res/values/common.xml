@@ -11,8 +11,8 @@
     <string name="select">Select Home</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="favoriteapps">Shortcut</string>
-    <string name="systemapps">System</string>
-    <string name="userapps">User</string>
+    <string name="systemapps">System Apps</string>
+    <string name="userapps">User Apps</string>
     <string name="addtoFavo">Add to home</string>
     <string name="removeFromFavo">Delete</string>
     <string name="addtoShort">Add to shortcut</string>
@@ -39,4 +39,6 @@
     <string name="system">System</string>
     <string name="landscape">landscape</string>
     <string name="portrait">Portrait</string>
+    <string name="show_title">Show Title</string>
+    <string name="show_index">Show alpha index</string>
 </resources>

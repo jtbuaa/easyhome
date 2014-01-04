@@ -10,13 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dip"
-            android:src="@drawable/icon" />
-
         <Button
             android:id="@+id/title"
             android:layout_width="fill_parent"
@@ -55,10 +48,20 @@
             android:textColor="#f0030f03"
             android:textSize="16sp" />
 
-            <HorizontalScrollView
+        <Button
+            android:id="@+id/share_desktop"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:background="@drawable/button_layout"
+            android:singleLine="true"
+            android:text="@string/share_desktop"
+            android:textSize="16sp" />
+
+        <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="10dip"
                 android:layout_marginRight="5dip"
                 android:fadeScrollbars="true" >
 
@@ -89,15 +92,81 @@
                 </RadioGroup>
             </HorizontalScrollView>
 
-        <Button
-            android:id="@+id/share_desktop"
-            android:layout_width="fill_parent"
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="5dip"
+                android:fadeScrollbars="true" >
+
+                <RadioGroup
+                    android:id="@+id/system_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/systemapps"
+                        android:textColor="#f0030f03"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:text="@string/grid_view"
+                        android:textColor="#f0030f03" />
+
+                    <RadioButton
+                        android:text="@string/list_view"
+                        android:textColor="#f0030f03" />
+                </RadioGroup>
+            </HorizontalScrollView>
+
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="5dip"
+                android:fadeScrollbars="true" >
+
+                <RadioGroup
+                    android:id="@+id/user_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/userapps"
+                        android:textColor="#f0030f03"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:text="@string/grid_view"
+                        android:textColor="#f0030f03" />
+
+                    <RadioButton
+                        android:text="@string/list_view"
+                        android:textColor="#f0030f03" />
+                </RadioGroup>
+            </HorizontalScrollView>
+
+        <CheckBox
+            android:id="@+id/show_index"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dip"
-            android:background="@drawable/button_layout"
-            android:singleLine="true"
-            android:text="@string/share_desktop"
-            android:textSize="16sp" />
+            android:layout_marginLeft="5dip"
+            android:text="@string/show_index"
+            android:textColor="#f0030f03" />
+
+        <CheckBox
+            android:id="@+id/show_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/show_title"
+            android:textColor="#f0030f03" />
 
         <CheckBox
             android:id="@+id/change_wallpaper"
