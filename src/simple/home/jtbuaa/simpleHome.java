@@ -249,8 +249,14 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		else radioGroup.setVisibility(View.GONE);
 
 		boolean showAlpha = perferences.getBoolean("alpha", true);
-		if (showAlpha) ;
-		else ;
+		if (showAlpha) {
+			sysAlphaList.AlphaGrid.setVisibility(View.VISIBLE);
+			userAlphaList.AlphaGrid.setVisibility(View.VISIBLE);
+		}
+		else {
+			sysAlphaList.AlphaGrid.setVisibility(View.GONE);
+			userAlphaList.AlphaGrid.setVisibility(View.GONE);
+		}
 
 		super.onResume();
 	}
