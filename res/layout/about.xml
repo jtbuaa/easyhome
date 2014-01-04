@@ -59,19 +59,19 @@
             android:textSize="16sp" />
 
         <CheckBox
-            android:id="@+id/show_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="@string/show_title"
-            android:textColor="#f0030f03" />
-
-        <CheckBox
             android:id="@+id/show_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/show_index"
+            android:textColor="#f0030f03" />
+
+        <CheckBox
+            android:id="@+id/show_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/show_title"
             android:textColor="#f0030f03" />
 
         <CheckBox
