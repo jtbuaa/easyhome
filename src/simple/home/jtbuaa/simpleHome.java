@@ -639,10 +639,10 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				Intent intent = new Intent(Intent.ACTION_MAIN);
 				intent.setPackage("harley.browsers");
 				if (!util.startActivity(intent, false, getBaseContext())) {
-					intent.setPackage("easy.browser");
+					intent.setPackage("easy.browser.classic");
 					if (!util.startActivity(intent, false, getBaseContext())) {
 						//intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=harley.browsers"));
-						intent.setPackage(myPackageName);// runtime error. VFY: unable to resolve static field
+						intent.setPackage("easy.browser");// runtime error. VFY: unable to resolve static field
 						util.startActivity(intent, true, getBaseContext());
 					}
 				}
