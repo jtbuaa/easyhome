@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="simple.home.jtbuaa"
+    android:installLocation="auto"
     android:versionCode="28"
     android:versionName="1.6.1" >
 
@@ -17,7 +18,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-sdk android:minSdkVersion="5"/>
+    <uses-sdk
+        android:minSdkVersion="5"
+        android:targetSdkVersion="11" />
 
     <supports-screens
         android:anyDensity="true"
