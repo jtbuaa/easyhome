@@ -600,9 +600,12 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 					else edgePressure = 0;
 				}
 				else edgePressure = 0;
-				if (edgePressure > 3 && interstitialAd != null && interstitialAd.isReady()) {
-					interstitialAd.show();
-					interstitialAd.loadAd();
+				if (edgePressure > 3 && interstitialAd != null) {
+					if (interstitialAd.isReady()) {
+						interstitialAd.show();
+						interstitialAd.loadAd();
+					}
+					else interstitialAd.loadAd();
 				}
 
 				if (!shakeWallpaper) {//don't move wallpaper if change wallpaper by shake
