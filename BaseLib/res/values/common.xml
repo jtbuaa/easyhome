@@ -11,4 +11,6 @@
     <string name="sendto">Feedback</string>
     <string name="feedback">do you have any more comments to me? (optional. eg, how to reproduce this crash?)</string>
 
+    <string name="buy_pro">Buy Pro</string>
+    <string name="buy_fix">Buy Pro version to fix it</string>
 </resources>

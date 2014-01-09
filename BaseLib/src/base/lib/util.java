@@ -183,14 +183,14 @@ public class util {
 	 * @return bitmap with count
 	 */
 	static public Bitmap generatorCountIcon(Bitmap icon, int count, int scheme, float density, Context context) {
-		// 初始化画布
+		// init canvas
 		int iconSize = (int) context.getResources().getDimension(
 				android.R.dimen.app_icon_size);
 		Bitmap contactIcon = Bitmap.createBitmap(iconSize, iconSize,
 				Config.ARGB_8888);
 		Canvas canvas = new Canvas(contactIcon);
 
-		// 拷贝图片
+		// copy image
 		Paint iconPaint = new Paint();
 		iconPaint.setDither(true);// 防抖动
 		iconPaint.setFilterBitmap(true);// 用来对Bitmap进行滤波处理，这样，当你选择Drawable时，会有抗锯齿的效果
@@ -214,10 +214,10 @@ public class util {
 					countPaint);
 		} else {// for easy browser. i don't know why the font change if invoke
 				// from easy browser. if from eash home, it is ok for 25f.
-			countPaint.setColor(Color.BLACK);
+			countPaint.setColor(Color.DKGRAY);
 			countPaint.setTextSize(20f*density);
-			canvas.drawText(String.valueOf(count), iconSize / 2 - 3*density,
-					iconSize / 2 + 10*density, countPaint);
+			canvas.drawText(count > 9 ? "..." : String.valueOf(count), iconSize / 2 - density,
+					iconSize / 2 + 13*density, countPaint);
 		}
 		return contactIcon;
 	}

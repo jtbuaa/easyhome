@@ -1,7 +1,6 @@
 package base.lib;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -17,23 +16,6 @@ public class WrapAdView {
 	AdView mInstance;
 	AdRequest adRequest;
 	Handler mHandler;
-
-	class DestroyTask extends AsyncTask<String, Integer, String> {
-		@Override
-		protected String doInBackground(String... params) {
-			if (mInstance != null) {
-				// seems easy to cause android.util.AndroidRuntimeException: 
-				// Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag
-				// which can't catch. add sleep seems ok. and put in AsyncTask will not block UI thread
-				try {
-					Thread.sleep(10000);
-					mInstance.stopLoading();
-					mInstance.destroy();
-				} catch (Exception e) {}
-			}
-			return null;
-		}
-	}
 
 	public WrapAdView(Activity activity, int size, String publisherID,
 			Handler handler) {
@@ -58,6 +40,7 @@ public class WrapAdView {
 
 			adRequest = new AdRequest();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -70,11 +53,6 @@ public class WrapAdView {
 	public void loadAd() {
 		if ((mInstance != null) && (adRequest != null))
 			mInstance.loadAd(adRequest);
-	}
-
-	public void destroy() {//do nothing on destroy which may cause FLAG_ACTIVITY_NEW_TASK error?
-		//DestroyTask dtask = new DestroyTask();
-		//dtask.execute();
 	}
 
 	public View getInstance() {

@@ -1,8 +1,7 @@
 package base.lib;
 
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +24,12 @@ public class CrashControl extends Activity {
 	Button btnRetry, btnCancel;
 	TextView tv;
 	int id;
-	boolean retry = false;
+	int retry = 0;// 0: normal, 1: retry, 2: buy pro
 	
 	NotificationManager nManager;
 
 	// for information collection
 	private Map<String, String> infos = new HashMap<String, String>();
-
-	// format the date as part of log
-	private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -50,7 +46,7 @@ public class CrashControl extends Activity {
 		init(getIntent());
 	}
 
-	private void init(Intent intent) {
+	private void init(final Intent intent) {
 		tv = (TextView) findViewById(R.id.download_name);
 		btnRetry = (Button) findViewById(R.id.pause);
 		btnCancel = (Button) findViewById(R.id.stop);
@@ -58,8 +54,13 @@ public class CrashControl extends Activity {
 		id = intent.getIntExtra("id", 0);
 		nManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-		final String errorMsg = intent.getStringExtra("errorMsg");
-		
+		String errorMsg = intent.getStringExtra("errorMsg");
+		if (errorMsg == null) retry = 1;
+		else if(errorMsg.contains("WebViewDatabase")) retry = 1;// should clear the database and retry if SQLite* exception
+		else if(errorMsg.contains("FLAG_ACTIVITY_NEW_TASK")) {
+			retry = 2;
+			errorMsg += "\n\n" + getString(R.string.buy_fix);
+		}
 		tv.setText(getPackageName() + " " + getString(R.string.crashed) + "\n\n" + errorMsg);
 
 		btnCancel.setText(getString(R.string.cancel));
@@ -71,31 +72,44 @@ public class CrashControl extends Activity {
 			}
 		});
 
-		if (errorMsg == null) retry = true;
-		else retry = errorMsg.contains("WebViewDatabase");// should clear the database and retry if SQLite* exception
 		SharedPreferences perferences = PreferenceManager.getDefaultSharedPreferences(this);
 		final SharedPreferences.Editor editor = perferences.edit();
 		boolean retried = perferences.getBoolean("retried", false);
-		if (retried) retry = false;// don't retry 2 times
+		if (retried) retry = 0;// don't retry 2 times
 		
-		if (retry) {// clear database and retry
+		if (retry == 2) {
+			btnRetry.setText(getString(R.string.buy_pro));
+			btnRetry.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=easy.browser.com"));
+					util.startActivity(intent, true, getBaseContext());
+					finish();
+				}
+			});
+		}
+		else if (retry == 1) {// clear database and retry to restart the browser
 			btnRetry.setText(getString(R.string.retry));
 			btnRetry.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View arg0) {// start new task to download
+				public void onClick(View arg0) {
 					deleteDatabase("webview.db");
 					editor.putBoolean("retried", true);
 					editor.commit();
 					
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					Uri data = Uri.parse("https://play.google.com/store/apps/details?id=easy.browser.classic");
-					intent.setData(data);
-					util.startActivity(intent, false, CrashControl.this);
+					Intent intent = new Intent(Intent.ACTION_MAIN);
+					try {
+						Method setPackage = Intent.class.getDeclaredMethod("setPackage", String.class);
+						setPackage.invoke(intent, getPackageName());
+						util.startActivity(intent, false, CrashControl.this);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
 					nManager.cancel(id);// remove notification
 					finish();
 				}
 			});
-
 		} else {// send error log to author
 			btnRetry.setText(getString(R.string.sendto));
 			btnRetry.setOnClickListener(new OnClickListener() {
@@ -113,7 +127,7 @@ public class CrashControl extends Activity {
 						String value = entry.getValue();
 						sb.append(key + "=" + value + "\n");
 					}
-					sb.append(errorMsg);
+					sb.append(intent.getStringExtra("errorMsg"));
 
 
 					Intent intent = new Intent(Intent.ACTION_SENDTO);
