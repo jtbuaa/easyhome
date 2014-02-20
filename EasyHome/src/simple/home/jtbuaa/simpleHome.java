@@ -104,6 +104,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	boolean shakeWallpaper = false;
 	boolean busy;
 	SharedPreferences perferences;
+	SharedPreferences.Editor editor;
 	String wallpaperFile = "";
 	int rotateMode = 1;
 	boolean systemIsGrid = true;
@@ -416,6 +417,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 			}
 			else {
 				userAlphaList.remove(info.activityInfo.packageName);
+	    		editor.putString("hide_package", info.activityInfo.packageName);
+	    		editor.commit();
 			}
 			refreshRadioButton();
 			break;
@@ -527,7 +530,8 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
     	sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
     	mSensor = sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		perferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	
+		editor = perferences.edit();
+
 		dm = new DisplayMetrics();  
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		
@@ -600,9 +604,12 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 					else edgePressure = 0;
 				}
 				else edgePressure = 0;
-				if (edgePressure > 3 && interstitialAd != null && interstitialAd.isReady()) {
-					interstitialAd.show();
-					interstitialAd.loadAd();
+				if (edgePressure > 3 && interstitialAd != null) {
+					if (interstitialAd.isReady()) {
+						interstitialAd.show();
+						interstitialAd.loadAd();
+					}
+					else interstitialAd.loadAd();
 				}
 
 				if (!shakeWallpaper) {//don't move wallpaper if change wallpaper by shake
@@ -715,11 +722,12 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//save the layout
-			    		SharedPreferences.Editor editor = perferences.edit();
 						if (mainlayout.getCurrentItem() == 0) 
 				    		editor.putBoolean("system", !sysAlphaList.mIsGrid);
-						else if (mainlayout.getCurrentItem() == 2) 
+						else if (mainlayout.getCurrentItem() == 2) {
 				    		editor.putBoolean("user", !userAlphaList.mIsGrid);
+				    		editor.putString("hide_package", "");
+						}
 			    		editor.commit();
 			    		
 			    		//restart the activity. note if set singleinstance or singletask of activity, below will not work on some device.
@@ -794,7 +802,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
             final String picName = intent.getStringExtra("picFile");
 			picList.add(picName);//add to picture list
 			
-    		SharedPreferences.Editor editor = perferences.edit();
     		editor.putBoolean("shake_enabled", true);
     		editor.commit();
         }
@@ -1044,6 +1051,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
             readFile("short");
             boolean shortEmpty = mShortApps.isEmpty();
             
+            String hidePackage = perferences.getString("hide_package", "");
 	    	//read all resolveinfo
 	    	String label_sms = "簡訊 Messaging Messages メッセージ 信息 消息 短信 메시지  Mensajes Messaggi Berichten SMS a MMS SMS/MMS"; //use label name to get short cut
 	    	String label_phone = "電話 Phone 电话 电话和联系人 拨号键盘 키패드  Telefon Teléfono Téléphone Telefono Telefoon Телефон 휴대전화  Dialer";
@@ -1091,7 +1099,10 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		    			}
 	    			}
 	    		}
-	    		else userAlphaList.add(ri, false, false);
+	    		else {
+	    			if (hidePackage.equals("") || !hidePackage.equals(ri.activityInfo.packageName))
+	    				userAlphaList.add(ri, false, false);
+	    		}
 		    	
 	    		try {
 					getPackageSizeInfo.invoke(pm, ri.activityInfo.packageName, sizeObserver);
@@ -1114,7 +1125,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
         	picList_selected = new ArrayList();
         	new File(downloadPath).list(new OnlyPic());
         	if (picList.size() > 0) {
-        		SharedPreferences.Editor editor = perferences.edit();
         		editor.putBoolean("shake_enabled", true);
         		editor.commit();
         	}
@@ -1271,7 +1281,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				        	mWallpaperManager.suggestDesiredDimensions(tmpWidth, dm.heightPixels);
 					    	
 							sensorMgr.unregisterListener(this);
-			        		SharedPreferences.Editor editor = perferences.edit();
 			        		shakeWallpaper = false;
 			        		editor.putBoolean("shake", false);
 			        		editor.commit();
@@ -1293,7 +1302,6 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 						if (picList_selected.isEmpty()) {
 							sensorMgr.unregisterListener(this);
 							
-			        		SharedPreferences.Editor editor = perferences.edit();
 			        		editor.putBoolean("shake_enabled", false);
 			        		shakeWallpaper = false;
 			        		editor.putBoolean("shake", false);
