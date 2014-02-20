@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">Easy Launcher</string>
+    <string name="help_message">Find you app by not more than 2 click. \nClick app icon to stop it, \nClick app name to launch, \nclick app version to uninstall, \nlong click app name: add shortcut, \nlong click shortcut to remove it.</string>
+    <string name="auto_change_wallpaper">change wallpaper by shake</string>
+    <string name="share_wallpaper">Share Wallpaper</string>
+    <string name="share_desktop">Share Desktop</string>
+    <string name="warning">Only root user can delete system app.\n\nDelete system app may cause phone can not boot.\n\nPlease think carefully！</string>
+    <string name="menu_choose_home">Switch Home</string>
+    <string name="select">Select Home</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="favoriteapps">Shortcut</string>
+    <string name="systemapps">System Apps</string>
+    <string name="userapps">User Apps</string>
+    <string name="addtoFavo">Add to home</string>
+    <string name="removeFromFavo">Delete</string>
+    <string name="addtoShort">Add to shortcut</string>
+    <string name="removeFromShort">Delete this shortcut</string>
+    <string name="appdetail">Detail...</string>
+    <string name="killapp">Stop it</string>
+    <string name="backapp">Backup</string>
+    <string name="hideapp">Hide</string>
+    <string name="hidepage">Hide current page</string>
+    <string name="app_share_text">" "is very cool, check it out..." "</string>
+    <string name="vote">Vote 5 stars if you like it</string>
+    <string name="list_view">List View</string>
+    <string name="grid_view">Grid View</string>
+    <string name="restart">It need restart to change the view. \nRestart now?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="sharemode">Share Mode</string>
+    <string name="share">Share</string>
+    <string name="sharetext">specific for developers, get at </string>
+    <string name="more">More...</string>
+    <string name="rotate_mode">Rotate" "</string>
+    <string name="system">System</string>
+    <string name="landscape">landscape</string>
+    <string name="portrait">Portrait</string>
+    <string name="show_title">Show page indicator</string>
+    <string name="show_index">Show alpha index</string>
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="5dip"
+    android:paddingRight="5dip"
+    android:shrinkColumns="2"
+    android:stretchColumns="2" >
+
+    <TableRow>
+
+        <ImageView
+            android:id="@+id/appicon"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_margin="5dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:background="#00bbbbbb"
+            android:width="1dip" />
+
+        <LinearLayout
+            android:id="@+id/app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:padding="4dip" >
+
+            <TextView
+                android:id="@+id/appname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="#FFFFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/appsource"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="#FF666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_height="fill_parent"
+            android:background="#00bbbbbb"
+            android:width="1dip" />
+
+        <TextView
+            android:id="@+id/appversion"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/button_layout_unselected"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:lines="2"
+            android:maxLines="2"
+            android:padding="3dip"
+            android:textColor="#FFDDDDDD"
+            android:textSize="12sp" />
+    </TableRow>
+
+</TableLayout>
