@@ -1214,7 +1214,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 	
 	@Override
 	protected void onNewIntent(Intent intent) {//go back to home if press Home key.
-		if ((intent.getAction().equals(Intent.ACTION_MAIN)) && (intent.hasCategory(Intent.CATEGORY_HOME))) {
+		if ((Intent.ACTION_MAIN.equals(intent.getAction())) && (intent.hasCategory(Intent.CATEGORY_HOME))) {
 			if (mainlayout.getCurrentItem() != homeTab) mainlayout.setCurrentItem(homeTab);
 			else if (shortAppList.getVisibility() == View.VISIBLE) shortBar.performClick();
 		}
