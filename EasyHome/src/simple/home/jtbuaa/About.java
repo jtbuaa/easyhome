@@ -132,13 +132,7 @@ public class About extends Activity{
         btnVote.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=simple.home.jtbuaa"));
-				if (!util.startActivity(intent, false, getBaseContext())) {
-					intent.setAction(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=simple.home.jtbuaa"));
-					intent.setComponent(getComponentName());
-					util.startActivity(intent, true, getBaseContext());
-				}
+				util.rate(getPackageName(), getBaseContext());
 			}
         });
 
@@ -152,15 +146,7 @@ public class About extends Activity{
         btnShareHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-    	        String text = getString(R.string.app_name) + ", " 
-    	        		+ getString(R.string.sharetext)
-       	        		+ " https://https://play.google.com/store/apps/details?id=simple.home.jtbuaa";
-        	        
-    	        Intent intent = new Intent(Intent.ACTION_SEND);
-    	        intent.setType("text/plain");  
-    	        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.share);
-        		intent.putExtra(Intent.EXTRA_TEXT, text);
-       			util.startActivity(Intent.createChooser(intent, getString(R.string.sharemode)), true, getBaseContext());
+				util.share(getPackageName(), getBaseContext());
 			}
         });
 
