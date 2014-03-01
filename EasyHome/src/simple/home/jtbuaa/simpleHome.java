@@ -14,8 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import base.lib.HanziToPinyin;
-import base.lib.WrapInterstitialAd;
 import base.lib.util;
 
 import android.app.Activity;
@@ -495,7 +497,7 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 		detailDlg.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(canBackup);//not backup if no SDcard.
 	}
 	
-	WrapInterstitialAd interstitialAd = null;
+	InterstitialAd interstitialAd = null;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -581,8 +583,9 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
         
 		mWallpaperManager = WallpaperManager.getInstance(this);
         
-		if (interstitialAd == null) interstitialAd = new WrapInterstitialAd(this, "a152395b161f6e6", mAppHandler);
-		interstitialAd.loadAd();
+		if (interstitialAd == null) interstitialAd = new InterstitialAd(this);
+		interstitialAd.setAdUnitId("a152395b161f6e6");
+		interstitialAd.loadAd(new AdRequest.Builder().build());
         mainlayout = (ViewPager)findViewById(R.id.mainFrame);
         mainlayout.setLongClickable(true);
         myPagerAdapter = new MyPagerAdapter();
@@ -605,11 +608,9 @@ public class simpleHome extends Activity implements SensorEventListener, sizedRe
 				}
 				else edgePressure = 0;
 				if (edgePressure > 3 && interstitialAd != null) {
-					if (interstitialAd.isReady()) {
+					if (interstitialAd.isLoaded())
 						interstitialAd.show();
-						interstitialAd.loadAd();
-					}
-					else interstitialAd.loadAd();
+					interstitialAd.loadAd(new AdRequest.Builder().build());
 				}
 
 				if (!shakeWallpaper) {//don't move wallpaper if change wallpaper by shake
