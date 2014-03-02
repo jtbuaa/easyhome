@@ -146,7 +146,7 @@ public class About extends Activity{
         btnShareHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				util.share(getPackageName(), getBaseContext());
+				util.share(getPackageName(), getBaseContext(), null);
 			}
         });
 
