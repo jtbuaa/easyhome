@@ -45,7 +45,6 @@ public class ShellInterface {
 
         } catch (Exception e) {
         	res += e.getMessage();
-			Log.d("===============", e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
