@@ -14,4 +14,5 @@ it do have some errors.
 
 most of all is I can't use resources from easy.lib.
 
+my wechat ID: easybrowser
 please give your comments if any, thanks.
