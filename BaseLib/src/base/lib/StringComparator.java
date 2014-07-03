@@ -3,8 +3,6 @@ package base.lib;
 import java.text.Collator;
 import java.util.Comparator;
 
-import android.content.pm.ResolveInfo;
-
 public class StringComparator implements Comparator<String> {
 	public StringComparator() {
 	}

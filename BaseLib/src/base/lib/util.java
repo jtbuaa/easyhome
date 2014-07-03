@@ -20,10 +20,45 @@ import android.graphics.Typeface;
 import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
 
 public class util {
+
+	static public void share(String packageName, Context context, String content) {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, R.string.share);
+		if (content == null)
+			intent.putExtra(Intent.EXTRA_TEXT,
+					context.getString(R.string.share_text)
+							+ " https://play.google.com/store/apps/details?id="
+							+ packageName);
+		else
+			intent.putExtra(Intent.EXTRA_TEXT, content);
+		startActivity(
+				Intent.createChooser(intent,
+						context.getString(R.string.share_with)), true, context);
+	}
+
+	static public void rate(String packageName, Context context) {
+		Intent intent = new Intent(Intent.ACTION_VIEW,
+				Uri.parse("market://details?id=" + packageName));
+		if (!startActivity(intent, false, context)) {
+			intent.setData(Uri
+					.parse("https://play.google.com/store/apps/details?id="
+							+ packageName));
+			startActivity(intent, true, context);
+		}
+	}
+
+	static public void feedBack(Context context) {
+		Intent intent = new Intent(Intent.ACTION_SENDTO);
+		intent.setData(Uri.fromParts("mailto",
+				context.getString(R.string.browser_author), null));
+		startActivity(intent, true, context);
+	}
 
 	static public boolean startActivity(Intent intent, boolean showToast,
 			Context context) {
@@ -46,7 +81,8 @@ public class util {
 									}).create();
 					dlg.show();
 				} catch (Exception ee) {
-					Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+					Toast.makeText(context, e.toString(), Toast.LENGTH_LONG)
+							.show();
 				}
 			return false;
 		}
@@ -88,7 +124,8 @@ public class util {
 			if (pi != null)
 				version = pi.versionName == null ? String
 						.valueOf(pi.versionCode) : pi.versionName;
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		return version;
 	}
 
@@ -100,7 +137,8 @@ public class util {
 					PackageManager.GET_ACTIVITIES);
 			if (pi != null)
 				version = String.valueOf(pi.versionCode);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		return version;
 	}
 
@@ -108,14 +146,16 @@ public class util {
 		String defaultPath = "/data/data/" + context.getPackageName();
 		try {
 			defaultPath = context.getFilesDir().getPath();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 
 		String downloadPath = defaultPath + "/";
 
 		boolean hasSDcard = false;
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
-			downloadPath = Environment.getExternalStorageDirectory() + "/simpleHome/";
+			downloadPath = Environment.getExternalStorageDirectory()
+					+ "/simpleHome/";
 			hasSDcard = true;
 		}
 
@@ -127,31 +167,44 @@ public class util {
 				myFilePath.mkdir();// create folder
 
 			File path = new File(downloadPath + "snap/");
-			if (path.isDirectory()) ;// folder exist
-			else path.mkdir();// create folder
+			if (path.isDirectory())
+				;// folder exist
+			else
+				path.mkdir();// create folder
 
 			path = new File(downloadPath + "source/");
-			if (path.isDirectory()) ;// folder exist
-			else path.mkdir();// create folder
+			if (path.isDirectory())
+				;// folder exist
+			else
+				path.mkdir();// create folder
 
 			path = new File(downloadPath + "cookie/");
-			if (path.isDirectory()) ;// folder exist
-			else path.mkdir();// create folder
+			if (path.isDirectory())
+				;// folder exist
+			else
+				path.mkdir();// create folder
 
 			path = new File(downloadPath + "apk/");
-			if (path.isDirectory()) ;// folder exist
-			else path.mkdir();// create folder
+			if (path.isDirectory())
+				;// folder exist
+			else
+				path.mkdir();// create folder
 
 			path = new File(downloadPath + "cache/");
-			if (path.isDirectory()) ;// folder exist
-			else path.mkdir();// create folder
+			if (path.isDirectory())
+				;// folder exist
+			else
+				path.mkdir();// create folder
 
 			path = new File(downloadPath + "bookmark/");
-			if (hasSDcard) {// if create this folder without sdcard, it will lose bookmarks
-				if (path.isDirectory()) ;// folder exist
-				else path.mkdir();// create folder
-			}
-			else if (path.isDirectory()) path.delete();
+			if (hasSDcard) {// if create this folder without sdcard, it will
+							// lose bookmarks
+				if (path.isDirectory())
+					;// folder exist
+				else
+					path.mkdir();// create folder
+			} else if (path.isDirectory())
+				path.delete();
 		} catch (Exception e) {
 			downloadPath = defaultPath + "/";
 		}
@@ -182,7 +235,8 @@ public class util {
 	 *            gaven bitmap
 	 * @return bitmap with count
 	 */
-	static public Bitmap generatorCountIcon(Bitmap icon, int count, int scheme, float density, Context context) {
+	static public Bitmap generatorCountIcon(Bitmap icon, int count, int scheme,
+			float density, Context context) {
 		// init canvas
 		int iconSize = (int) context.getResources().getDimension(
 				android.R.dimen.app_icon_size);
@@ -192,13 +246,12 @@ public class util {
 
 		// copy image
 		Paint iconPaint = new Paint();
-		iconPaint.setDither(true);// 防抖动
-		iconPaint.setFilterBitmap(true);// 用来对Bitmap进行滤波处理，这样，当你选择Drawable时，会有抗锯齿的效果
+		iconPaint.setDither(true);
+		iconPaint.setFilterBitmap(true);
 		Rect src = new Rect(0, 0, icon.getWidth(), icon.getHeight());
 		Rect dst = new Rect(0, 0, iconSize, iconSize);
 		canvas.drawBitmap(icon, src, dst, iconPaint);
 
-		// 启用抗锯齿和使用设备的文本字距
 		Paint countPaint = new Paint(Paint.ANTI_ALIAS_FLAG
 				| Paint.DEV_KERN_TEXT_FLAG);
 		if (scheme == 0) {// for newpage icon
@@ -215,9 +268,9 @@ public class util {
 		} else {// for easy browser. i don't know why the font change if invoke
 				// from easy browser. if from eash home, it is ok for 25f.
 			countPaint.setColor(Color.DKGRAY);
-			countPaint.setTextSize(20f*density);
-			canvas.drawText(count > 9 ? "..." : String.valueOf(count), iconSize / 2 - density,
-					iconSize / 2 + 13*density, countPaint);
+			countPaint.setTextSize(20f * density);
+			canvas.drawText(count > 9 ? "..." : String.valueOf(count), iconSize
+					/ 2 - density, iconSize / 2 + 13 * density, countPaint);
 		}
 		return contactIcon;
 	}
