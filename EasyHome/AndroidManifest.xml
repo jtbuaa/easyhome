@@ -35,10 +35,8 @@
 
     <application
         android:name="base.lib.BaseApp"
-        android:debuggable="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name"
         android:largeHeap="true"
         android:sharedUserId="android.uid.system"
         android:theme="@style/Theme" >
