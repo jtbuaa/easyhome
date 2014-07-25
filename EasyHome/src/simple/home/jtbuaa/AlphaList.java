@@ -137,7 +137,8 @@ public abstract class AlphaList<T> {
 	void sortAlpha() {
     	sort();//sort by name
     	
-		String tmp = getAlpha(mApps.get(0));
+	if (mApps.size() == 0) return;
+	String tmp = getAlpha(mApps.get(0));
     	alphaList.add(tmp);
     	for (int i = 1; i < mApps.size(); i++) {
     		String tmp2 = getAlpha(mApps.get(i));
