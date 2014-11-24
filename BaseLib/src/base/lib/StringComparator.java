@@ -1,17 +1,21 @@
+
 package base.lib;
 
 import java.text.Collator;
 import java.util.Comparator;
 
 public class StringComparator implements Comparator<String> {
-	public StringComparator() {
-	}
+    public StringComparator() {
+    }
 
-	public final int compare(String a, String b) {
-		if (a == null) return -1;
-		else if (b == null) return 1;
-		else return sCollator.compare(a, b);
-	}
+    public final int compare(String a, String b) {
+        if (a == null)
+            return -1;
+        else if (b == null)
+            return 1;
+        else
+            return sCollator.compare(a, b);
+    }
 
-	private final Collator sCollator = Collator.getInstance();
+    private final Collator sCollator = Collator.getInstance();
 }
